@@ -42,6 +42,7 @@ GRANT ALL ON performance TO jmeter
 
 Скачиваем файл https://github.com/NovatecConsulting/JMeter-InfluxDB-Writer/releases/download/v-1.2/JMeter-InfluxDB-Writer-plugin-1.2.jar и кладем его в папку с JMeter >/lib/ext
 Далее добавляем Backend Listener в наш проект и настраиваем его
+
 ![Добавляем листенер](./images/jmeter-addlistener.png)
 ![Настраиваем rocks листенер](./images/jmeter-influxsettimgrocks.png)
 ![Настраиваем apache листенер](./images/jmeter-influxsettingsapache.png)

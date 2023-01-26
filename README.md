@@ -1,3 +1,4 @@
+
 > Дисклеймер: в данном примере я умышленно не использую docker контейнеры и выполняю настройку окружения на чистой ВМ, т.к, по моему мнению, только такой вариант установки дает полную картину взаимодействия сервисов, что в свою очередь полезно для новичков.
 
 Apache Jmeter умеет отправлять данные во внешние источники, что полезно для отслеживание выполнения тестов "в прямом эфире". В данном примере я расскажу как настроить подобное взаимодействие и поделюсь готовым решением, по настройке дашбордов, которые использую на множестве проектов ни один год.
@@ -66,6 +67,9 @@ sudo systemctl start grafana-server
 
 
 Я приведу в качестве примера 2 своих дашборда под каждый из листенеров, в графана импортируем дашборд из JSON:
-https://github.com/kschepkin/perf-jmeter/blob/main/dashboards/Jmeter-Rocks-Dashboard.json
-https://github.com/kschepkin/perf-jmeter/blob/main/dashboards/Jmeter-Apache-Dashboard.json
 
+ 1. https://github.com/kschepkin/perf-jmeter/blob/main/dashboards/Jmeter-Rocks-Dashboard.json
+ 2. https://github.com/kschepkin/perf-jmeter/blob/main/dashboards/Jmeter-Apache-Dashboard.json
+
+**Описание для дашбордов**
+в процессе

@@ -10,14 +10,10 @@ Apache Jmeter умеет отправлять данные во внешние �
 # Добавляем репозиторий в систему:
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 684A14CF2582E0C5
 echo 'deb  https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
-```
-```bash
 # Устанавливаем и запускаем InfluxDB
 sudo apt update && sudo apt install influxdb
 sudo systemctl unmask influxdb.service
 sudo systemctl start influxdb
-```
-```bash
 # Проверяем правильность установки:
 influx -version
 ```

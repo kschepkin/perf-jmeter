@@ -3,6 +3,7 @@
 
 Apache Jmeter умеет отправлять данные во внешние источники, что полезно для отслеживание выполнения тестов "в прямом эфире". В данном примере я расскажу как настроить подобное взаимодействие и поделюсь готовым решением, по настройке дашбордов, которые использую на множестве проектов ни один год.
 
+## Установка InfluxDB
 Для начала нам понадобится InfluxDB, я использую довольно старую версию 1.8, в ней нет графического интерфейса, который, впрочем, нам не понадобится, потому как для построение дашбордов мы будем использовать Grafana.
 
 ```bash
@@ -34,7 +35,8 @@ GRANT ALL ON performance TO jmeter
 ```
 На этом настройка БД завершена. 
 
-**Настройка JMeter**
+## Настройка JMeter
+
 Есть 2 хороших листенера для работы с данными из JMeter:
 1. rocks.nt.apm.jmeter.JMeterInfluxDBBackendListenerClient 
 2. org.apache.jmeter.visualizers.backend.influxdb.HttpMetricsSender
@@ -47,13 +49,16 @@ GRANT ALL ON performance TO jmeter
 ![Добавляем листенер](./images/jmeter-addlistener.png)
 ![Настраиваем rocks листенер](./images/jmeter-influxsettimgrocks.png)
 ![Настраиваем apache листенер](./images/jmeter-influxsettingsapache.png)
+
 где 127.0.0.1 - адрес сервера, на котором располагается наша InfluxDB
 
-Установка и настройка Grafana
+## Установка и настройка Grafana
+
+Для красивого отображения записанных в Influx данных нам потребуется Grafana.
 ```bash
 # Устанавливаем зависимости
 sudo apt install -y adduser libfontconfig1
-# Скачиваем и устанавливаем Grafana (загрузка недоступна из России)
+# Скачиваем Grafana загрузка недоступна из России, но мы то знаем что делать :)
 wget https://dl.grafana.com/enterprise/release/grafana-enterprise_9.3.4_amd64.deb
 # Установка и запуск
 sudo dpkg -i grafana-enterprise_9.3.4_amd64.deb
@@ -71,9 +76,10 @@ sudo systemctl start grafana-server
  1. https://github.com/kschepkin/perf-jmeter/blob/main/dashboards/Jmeter-Rocks-Dashboard.json
  2. https://github.com/kschepkin/perf-jmeter/blob/main/dashboards/Jmeter-Apache-Dashboard.json
 
-**Описание для дашбордов**
+## Описание дашбордов
+
 В результате описанных действий у нас появится 2 дашборда:
 Rocks предназнеачен под параллельный запуск нескольких экземпляров JMeter на разных машинах.
 ![Rocks дашборд](./images/Rocks-parallel-dashboard.png)
 Apache не предполагает более одного инстанса нагрузки, однако удобен в качестве дополнительного инструмента анализа данных, т.к. это единственный листенер, который передает детальную информацию об ошибках.
-![Rocks дашборд](./images/Apache-dashboard.png)
+![Apache дашборд](./images/Apache-dashboard.png)

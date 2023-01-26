@@ -72,4 +72,8 @@ sudo systemctl start grafana-server
  2. https://github.com/kschepkin/perf-jmeter/blob/main/dashboards/Jmeter-Apache-Dashboard.json
 
 **Описание для дашбордов**
-в процессе
+В результате описанных действий у нас появится 2 дашборда:
+Rocks предназнеачен под параллельный запуск нескольких экземпляров JMeter на разных машинах.
+![Rocks дашборд](./images/Rocks-parallel-dashboard.png)
+Apache не предполагает более одного инстанса нагрузки, однако удобен в качестве дополнительного инструмента анализа данных, т.к. это единственный листенер, который передает детальную информацию об ошибках.
+![Rocks дашборд](./images/Apache-dashboard.png)

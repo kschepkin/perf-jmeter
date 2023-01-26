@@ -66,7 +66,6 @@ sudo systemctl start grafana-server
 
 <details>
   <summary>Дашборд1</summary>
-```bash
 {
   "annotations": {
     "list": [
@@ -2009,7 +2008,5 @@ sudo systemctl start grafana-server
   "uid": "qyJj1xIiz",
   "version": 31
 }
-```
-  
 </details>
 

@@ -1,4 +1,4 @@
-#Why do you need it?
+# Why do you need it?
 
 Often, load testing requires a large load on the system, which 1 instance of JMeter cannot provide. At the moment, there is not a single working solution on the market to perform such tasks. So, in view of its high relevance, a solution was developed with the ability to run multiple instances of Jmeter in parallel from multiple machines. 
 In addition to its main function, this solution allows you to track the result in real time when running a test.

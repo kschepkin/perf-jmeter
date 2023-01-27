@@ -101,28 +101,28 @@ stage('Prepare loaders') {
                         "Load1": {
                             script {
                                 if (server1 != "OFF") {
-                                    sh "ssh  ${server1} \"export _JAVA_OPTIONS='-Xms3072m -Xmx5120m' && cd perf && ./apache-jmeter-5.3/bin/jmeter.sh -n -t ~/perf/scripts/SL/${PERF_TEST}.jmx -l ~/perf/results/${PERF_TEST}/${BUILD_NUMBER}.jtl\" "
+                                    sh "ssh  ${server1} \"export _JAVA_OPTIONS='-Xms3072m -Xmx5120m' && cd perf && ./apache-jmeter-5.3/bin/jmeter.sh -n -t ~/perf/scripts/${PERF_TEST}.jmx -l ~/perf/results/${PERF_TEST}/${BUILD_NUMBER}.jtl\" "
                                 }
                             }
                         },
                         "Load2": {
                             script {
                                 if (server2 != "OFF") {
-                                    sh "ssh  ${server2} \"export _JAVA_OPTIONS='-Xms3072m -Xmx5120m' && cd perf && ./apache-jmeter-5.3/bin/jmeter.sh -n -t ~/perf/scripts/SL/${PERF_TEST}.jmx -l ~/perf/results/${PERF_TEST}/${BUILD_NUMBER}.jtl\" "
+                                    sh "ssh  ${server2} \"export _JAVA_OPTIONS='-Xms3072m -Xmx5120m' && cd perf && ./apache-jmeter-5.3/bin/jmeter.sh -n -t ~/perf/scripts/${PERF_TEST}.jmx -l ~/perf/results/${PERF_TEST}/${BUILD_NUMBER}.jtl\" "
                                 }
                             }
                         },
                         "Load3": {
                             script {
                                 if (server3 != "OFF") {
-                                    sh "ssh  ${server3} \"export _JAVA_OPTIONS='-Xms3072m -Xmx5120m' && cd perf && ./apache-jmeter-5.3/bin/jmeter.sh -n -t ~/perf/scripts/SL/${PERF_TEST}.jmx -l ~/perf/results/${PERF_TEST}/${BUILD_NUMBER}.jtl\" "
+                                    sh "ssh  ${server3} \"export _JAVA_OPTIONS='-Xms3072m -Xmx5120m' && cd perf && ./apache-jmeter-5.3/bin/jmeter.sh -n -t ~/perf/scripts/${PERF_TEST}.jmx -l ~/perf/results/${PERF_TEST}/${BUILD_NUMBER}.jtl\" "
                                 }
                             }
                         },
                         "Load4": {
                             script {
                                 if (server4 != "OFF") {
-                                    sh "ssh  ${server4} \"export _JAVA_OPTIONS='-Xms3072m -Xmx5120m' && cd perf && ./apache-jmeter-5.3/bin/jmeter.sh -n -t ~/perf/scripts/SL/${PERF_TEST}.jmx -l ~/perf/results/${PERF_TEST}/${BUILD_NUMBER}.jtl\" "
+                                    sh "ssh  ${server4} \"export _JAVA_OPTIONS='-Xms3072m -Xmx5120m' && cd perf && ./apache-jmeter-5.3/bin/jmeter.sh -n -t ~/perf/scripts/${PERF_TEST}.jmx -l ~/perf/results/${PERF_TEST}/${BUILD_NUMBER}.jtl\" "
                                 }
                             }
                         }

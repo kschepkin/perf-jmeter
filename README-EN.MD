@@ -1,7 +1,7 @@
 # Why do you need it?
 
-Often, load testing requires a large load on the system, which 1 instance of JMeter cannot provide. At the moment, there is not a single working solution on the market to perform such tasks. So, in view of its high relevance, a solution was developed with the ability to run multiple instances of Jmeter in parallel from multiple machines. 
-In addition to its main function, this solution allows you to track the result in real time when running a test.
+Often load testing requires a large load on the system, which cannot be provided by 1 instance of JMeter. At the moment I have not found any working solution to perform such a task. So I developed a solution with the ability to run multiple instances of Jmeter in parallel from multiple machines. 
+In addition to its main function, this solution allows you to monitor the result in real time when running a test.
 
 > Disclaimer: In this example I purposely do not use docker containers and set up the environment on a clean VM, because in my opinion, only this installation option gives a complete picture of the interaction of services, which in turn is useful for newcomers.
 
@@ -80,7 +80,8 @@ I'll give as an example 2 of my dashboards under each of the listener, in grafan
 
 As a result of the steps above we have two dashboards:
 Rocks is designed to run several JMeter instances on different machines in parallel.
-Rocks dashboard(./images/Rocks-parallel-dashboard.png)
+![Rocks dashboard](./images/Rocks-parallel-dashboard.png)
+
 Apache does not assume more than one load instance, but is handy as an additional data analysis tool because it is the only listener that reports detailed error information.
 ![Apache dashboard](./images/Apache-dashboard.png)
 

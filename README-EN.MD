@@ -1,3 +1,8 @@
+# Why do you need it?
+
+When performing load testing, I often need a large load on the system, which a single JMeter instance cannot provide, so I developed a solution with the ability to run multiple instances of JMeter in parallel from multiple machines. 
+This solution also allows you to track the results in real time when you run tests.
+
 
 > Disclaimer: In this example I purposely do not use docker containers and set up the environment on a clean VM, because in my opinion, only this installation option gives a complete picture of the interaction of services, which in turn is useful for newcomers.
 

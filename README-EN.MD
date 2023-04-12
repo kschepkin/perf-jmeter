@@ -98,3 +98,6 @@ Link to the Pipeline script for Jenkins:
 https://github.com/kschepkin/perf-jmeter/blob/inProgress/jenkins-pipelines/parallel_pipeline.groovy
 When setting up the jdk in Jenkins, you need to enable the "This is a parameterized build" option and add a String parameter named "PERF_TEST".
 I've also attached a Pipeline and a Kill script that forcibly terminates all JMeter instances - will be needed if you need to terminate the tests early.
+
+# Docker
+You can also use my pre-built docker container, the instructions are in the repository: [Docker Hub](https://hub.docker.com/repository/docker/kschepkin/perf-test/general)

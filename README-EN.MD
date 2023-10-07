@@ -12,7 +12,7 @@ First we need InfluxDB, I use a fairly old version 1.8, it has no GUI which we w
 
 ```bash
 # Add the repository to the system:
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 684A14CF2582E0C5
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8FF8E1F7DF8B07E
 echo 'deb https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
 # Install and run InfluxDB
 sudo apt update && sudo apt install influxdb
@@ -57,11 +57,11 @@ Where 127.0.0.1 is the server address where our InfluxDB resides
 In order to display the Influx data nicely we will need Grafana.
 ```bash
 # Install dependencies
-sudo apt install -y adduser libfontconfig1
-# Download Grafana download not available from Russia, but we know what to do :)
-wget https://dl.grafana.com/enterprise/release/grafana-enterprise_9.3.4_amd64.deb
+sudo apt install -y adduser libfontconfig1 musl
+# Download Grafana
+wget https://dl.grafana.com/enterprise/release/grafana-enterprise_10.1.4_amd64.deb
 # Install and startup
-sudo dpkg -i grafana-enterprise_9.3.4_amd64.deb
+sudo dpkg -i grafana-enterprise_10.1.4_amd64.deb
 sudo systemctl start grafana-server
 ```
 After a successful start you can open http://127.0.0.1:3000 , where 127.0.0.1 is the address of the host where Grafana is installed. The first login is with login and password admin, after login the system will ask for a new admin password.

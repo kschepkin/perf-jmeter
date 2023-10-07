@@ -13,10 +13,10 @@ Apache Jmeter умеет отправлять данные во внешние �
 
 ```bash
 # Добавляем репозиторий в систему:
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 684A14CF2582E0C5
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8FF8E1F7DF8B07E
 echo 'deb  https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
 # Устанавливаем и запускаем InfluxDB
-sudo apt update && sudo apt install influxdb
+sudo apt update && sudo apt install influxdb 
 sudo systemctl unmask influxdb.service
 sudo systemctl start influxdb
 # Проверяем правильность установки:
@@ -58,11 +58,11 @@ GRANT ALL ON performance TO jmeter
 Для красивого отображения записанных в Influx данных нам потребуется Grafana.
 ```bash
 # Устанавливаем зависимости
-sudo apt install -y adduser libfontconfig1
+sudo apt install -y adduser libfontconfig1 musl
 # Скачиваем Grafana загрузка недоступна из России, но мы то знаем что делать :)
-wget https://dl.grafana.com/enterprise/release/grafana-enterprise_9.3.4_amd64.deb
+wget https://dl.grafana.com/enterprise/release/grafana-enterprise_10.1.4_amd64.deb
 # Установка и запуск
-sudo dpkg -i grafana-enterprise_9.3.4_amd64.deb
+sudo dpkg -i grafana-enterprise_10.1.4_amd64.deb
 sudo systemctl start grafana-server
 ```
 После успешного старта можно открывать в браузере http://127.0.0.1:3000 , где 127.0.0.1 - адрес хоста, на котором установлена Grafana. Первый вход осуществляется с логином и паролем admin, после входа система попросит ввести новый пароль админа.

@@ -27,7 +27,7 @@ sudo service influxdb status
     где 127.0.0.1 - адрес сервера, на котором располагается наша InfluxDB
 2) Логин и пароль по умолчанию admin
 3) При первом входе система предложит поменять пароль и создать организацию/бакет - делаем это, названия можно придумать самостоятельно
-4) Переходим в Api Tokens ![Api tokens](./images/api-token.png)
+4) Переходим в Api Tokens ![Api tokens](./images/api-tokens.png)
 5) Создаем новый токен с доступом к ранее созданному бакету на чтение и запись
 ![Api token create](./images/generate-cutom-token.png)
 
@@ -36,7 +36,7 @@ sudo service influxdb status
 # Настройка JMeter
 
 Нам потребуется плагин jmeter-influxdb2-listener-plugin для работы с данными из JMeter,
-cкачиваем файл https://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin/releases/download/v2.7/jmeter-plugins-influxdb2-listener-2.7.jar и кладем его в папку с JMeter >/lib/ext
+cкачиваем файл [по ссылке](https://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin/releases/download/v2.7/jmeter-plugins-influxdb2-listener-2.7.jar) и кладем его в папку с JMeter >/lib/ext
 Далее добавляем Backend Listener в наш проект 
 
 ![Добавляем листенер](./images/jmeter-addlistener.png)
@@ -63,8 +63,7 @@ sudo systemctl start grafana-server
 ![Настройка датасорса](./images/grafana-influx2-connect.png)
 
 
-В графана импортируем дашборд из JSON, который можно скачать на странице:
-https://grafana.com/grafana/dashboards/13644-jmeter-load-test-org-md-jmeter-influxdb2-visualizer-influxdb-v2-0-flux/
+В графана импортируем дашборд из JSON, который можно скачать на (странице по ссылке](https://grafana.com/grafana/dashboards/13644-jmeter-load-test-org-md-jmeter-influxdb2-visualizer-influxdb-v2-0-flux/).
 
 
 ## Бонус: Настройка тестового прогона в Jenkins
@@ -76,9 +75,5 @@ https://grafana.com/grafana/dashboards/13644-jmeter-load-test-org-md-jmeter-infl
 sudo apt install default-jre default-jdk
 ```
 Ссылка на Pipeline скрипт для Jenkins:
-https://github.com/kschepkin/perf-jmeter/blob/inProgress/jenkins-pipelines/parallel_pipeline.groovy
+[parallel_pipeline.groovy](https://github.com/kschepkin/perf-jmeter/blob/inProgress/jenkins-pipelines/parallel_pipeline.groovy)
 При настройке джобы в Jenkins требуется включить опцию "Это - параметризированная сборка" и добавить String параметр с именем "PERF_TEST".
-Также я приложил Pipeline и скрипт Kill, который принудительно завершает все экземпляры JMeter - понадобится, если требуется завершить тесты раньше времени.
-
-# Docker
-Также вы можете использовать предварительно собранный мной докер контейнер, инструкция по запуску есть репозитории: [Docker Hub](https://hub.docker.com/repository/docker/kschepkin/perf-test/general)

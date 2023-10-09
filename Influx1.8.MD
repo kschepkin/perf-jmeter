@@ -9,37 +9,47 @@
 Apache Jmeter умеет отправлять данные во внешние источники, что полезно для отслеживание выполнения тестов в реальном времени. В данном примере я расскажу как настроить подобное взаимодействие и поделюсь готовым решением, по настройке дашбордов, которые использую на множестве проектов ни один год.
 
 # Установка InfluxDB
-Для начала нам понадобится InfluxDB, который содержит свой графический интерфейс, но для построения дашбордов мы будем использовать Grafana.
+Для начала нам понадобится InfluxDB, я использую довольно старую версию 1.8, в ней нет графического интерфейса, который, впрочем, нам не понадобится, потому как для построения дашбордов мы будем использовать Grafana.
 
 ```bash
-# Скачиваем установщик:
-wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.7.1-amd64.deb
+# Добавляем репозиторий в систему:
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8FF8E1F7DF8B07E
+echo 'deb  https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
 # Устанавливаем и запускаем InfluxDB
-sudo dpkg -i influxdb2-2.7.1-amd64.deb
-sudo service influxdb start
+sudo apt update && sudo apt install influxdb 
+sudo systemctl unmask influxdb.service
+sudo systemctl start influxdb
 # Проверяем правильность установки:
-sudo service influxdb status
+influx -version
 ```
-Если в терминале появилось  "Active: active (running)", значит мы все сделали правильно!
+Если в терминале появилось  "InfluxDB shell version: 1.8.10", значит мы все сделали правильно!
 
-Далее, для того чтоб JMeter мог подключиться к нашей базе, необходимо создать данные для подключения:
-1) Переходим в консоль управления influx в бразузере по адресу http://127.0.0.1:8086  
-    где 127.0.0.1 - адрес сервера, на котором располагается наша InfluxDB
-2) Логин и пароль по умолчанию admin
-3) При первом входе система предложит поменять пароль и создать организацию/бакет - делаем это, названия можно придумать самостоятельно
-4) Переходим в Api Tokens [Api tokens](./images/api-token.png)
-5) Создаем новый токен с доступом к ранее созданному бакету на чтение и запись
-[Api token create](./images/generate-cutom-token.png)
-
+Далее, для того чтоб JMeter мог подключиться к нашей базе, необходимо создать данные для подключения
+```bash
+# Открываем консоль работы с БД:
+influx
+# Создаем базу в которую JMeter будет писать данные:
+create database "performance"
+# Создаем пользователя для подключения и выдаем ему права на доступ к базе:
+CREATE USER jmeter WITH PASSWORD 'passwordfortest'
+GRANT ALL ON performance TO jmeter 
+```
 На этом настройка БД завершена. 
 
 # Настройка JMeter
 
-Нам потребуется плагин jmeter-influxdb2-listener-plugin для работы с данными из JMeter,
-cкачиваем файл https://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin/releases/download/v2.7/jmeter-plugins-influxdb2-listener-2.7.jar и кладем его в папку с JMeter >/lib/ext
+Есть 2 хороших листенера для работы с данными из JMeter:
+1. rocks.nt.apm.jmeter.JMeterInfluxDBBackendListenerClient 
+2. org.apache.jmeter.visualizers.backend.influxdb.HttpMetricsSender
+
+Я покажу настройку для обоих, потому что они в какой-то мере дополняют друг друга, однако стоит отметить, что для многопотоковой нагрузки полноценно подходит лишь первый, потому что только в нем имеется информация о количестве активных тредов, которые можно просуммировать, в случае если вы запускаете тесты одновременно с нескольких машин, как в моем случае.
+
+Скачиваем файл https://github.com/NovatecConsulting/JMeter-InfluxDB-Writer/releases/download/v-1.2/JMeter-InfluxDB-Writer-plugin-1.2.jar и кладем его в папку с JMeter >/lib/ext
 Далее добавляем Backend Listener в наш проект и настраиваем его
+
 ![Добавляем листенер](./images/jmeter-addlistener.png)
-![Настраиваем influx2 листенер](./images/influx2-listener-config.png)
+![Настраиваем rocks листенер](./images/jmeter-influxsettimgrocks.png)
+![Настраиваем apache листенер](./images/jmeter-influxsettingsapache.png)
 
 где 127.0.0.1 - адрес сервера, на котором располагается наша InfluxDB
 
@@ -57,11 +67,23 @@ sudo systemctl start grafana-server
 ```
 После успешного старта можно открывать в браузере http://127.0.0.1:3000 , где 127.0.0.1 - адрес хоста, на котором установлена Grafana. Первый вход осуществляется с логином и паролем admin, после входа система попросит ввести новый пароль админа.
 Подключаем InfluxDB в качестве источника данных на странице: http://127.0.0.1:3000/datasources
-![Настройка датасорса](./images/grafana-influx2-connect.png)
+![Настройка датасорса](./images/grafana-influx-connect.png)
 
 
-В графана импортируем дашборд из JSON, который можно скачать на странице:
-https://grafana.com/grafana/dashboards/13644-jmeter-load-test-org-md-jmeter-influxdb2-visualizer-influxdb-v2-0-flux/
+
+
+Я приведу в качестве примера 2 своих дашборда под каждый из листенеров, в графана импортируем дашборд из JSON:
+
+ 1. https://github.com/kschepkin/perf-jmeter/blob/main/dashboards/Jmeter-Rocks-Dashboard.json
+ 2. https://github.com/kschepkin/perf-jmeter/blob/main/dashboards/Jmeter-Apache-Dashboard.json
+
+# Описание дашбордов
+
+В результате описанных действий у нас появится 2 дашборда:
+Rocks предназнеачен под параллельный запуск нескольких экземпляров JMeter на разных машинах.
+![Rocks дашборд](./images/Rocks-parallel-dashboard.png)
+Apache не предполагает более одного инстанса нагрузки, однако удобен в качестве дополнительного инструмента анализа данных, т.к. это единственный листенер, который передает детальную информацию об ошибках.
+![Apache дашборд](./images/Apache-dashboard.png)
 
 
 ## Бонус: Настройка тестового прогона в Jenkins

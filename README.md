@@ -27,9 +27,9 @@ sudo service influxdb status
     где 127.0.0.1 - адрес сервера, на котором располагается наша InfluxDB
 2) Логин и пароль по умолчанию admin
 3) При первом входе система предложит поменять пароль и создать организацию/бакет - делаем это, названия можно придумать самостоятельно
-4) Переходим в Api Tokens [Api tokens](./images/api-token.png)
+4) Переходим в Api Tokens ![Api tokens](./images/api-token.png)
 5) Создаем новый токен с доступом к ранее созданному бакету на чтение и запись
-[Api token create](./images/generate-cutom-token.png)
+![Api token create](./images/generate-cutom-token.png)
 
 На этом настройка БД завершена. 
 
@@ -37,8 +37,11 @@ sudo service influxdb status
 
 Нам потребуется плагин jmeter-influxdb2-listener-plugin для работы с данными из JMeter,
 cкачиваем файл https://github.com/mderevyankoaqa/jmeter-influxdb2-listener-plugin/releases/download/v2.7/jmeter-plugins-influxdb2-listener-2.7.jar и кладем его в папку с JMeter >/lib/ext
-Далее добавляем Backend Listener в наш проект и настраиваем его
+Далее добавляем Backend Listener в наш проект 
+
 ![Добавляем листенер](./images/jmeter-addlistener.png)
+и настраиваем его
+
 ![Настраиваем influx2 листенер](./images/influx2-listener-config.png)
 
 где 127.0.0.1 - адрес сервера, на котором располагается наша InfluxDB
